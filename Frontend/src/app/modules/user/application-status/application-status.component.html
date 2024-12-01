@@ -1,0 +1,100 @@
+<div class="wrapper">
+  <app-header></app-header>
+
+  <main class="container " id="statusDiv">
+    <div class="row justify-content-center align-items-center">
+      <!-- Carousel Section -->
+      <div class="col-md-4">
+        <div class="image-container">
+          <img src="./assets/images/track status.jpg" alt="Passport Image" class="img-fluid">
+        </div>
+      </div>
+      <!-- Status Tracker Section -->
+      <div class="col-md-8 mb-4 " id="statustracker">
+        <h4 class="text-center mb-4">Track Application Status</h4>
+        <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="applicationType" class="form-label">Application Type:</label>
+              <select id="applicationType" formControlName="applicationType" class="form-control">
+                <option value="" disabled selected>Select Type</option>
+                <option *ngFor="let type of applicationTypes" [value]="type.value">{{ type.key }}</option>
+              </select>
+              <div class="error-message"
+                   *ngIf="myForm.get('applicationType')?.touched && myForm.get('applicationType')?.hasError('required')">
+                Please select an application type.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="applicationNo" class="form-label">Application/File Number:</label>
+              <input type="text" id="applicationNo" formControlName="applicationNo" class="form-control">
+              <div class="error-message"
+                   *ngIf="myForm.get('applicationNo')?.touched && myForm.get('applicationNo')?.hasError('required')">
+                Please provide an application/file number.
+              </div>
+              <div class="error-message"
+                   *ngIf="myForm.get('applicationNo')?.touched && myForm.get('applicationNo')?.hasError('pattern')">
+                Application number must be exactly 10 digits long.
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="dob" class="form-label">Date of Birth:</label>
+              <input type="date" id="dob" formControlName="dob" class="form-control">
+              <div class="error-message" *ngIf="myForm.get('dob')?.touched && myForm.get('dob')?.hasError('required')">
+                Please provide your date of birth.
+              </div>
+              <div class="error-message" *ngIf="myForm.get('dob')?.touched && myForm.get('dob')?.hasError('pastDate')">
+                Date of birth must be a past date.
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="form-buttons text-center mt-4">
+              <button type="submit" class="btn btn-success me-2" [disabled]="myForm.invalid">Submit</button>
+            </div>
+          </div>
+        </form>
+        
+
+        <!-- Table Section -->
+        <div class="row" *ngIf="applicationDetails">
+          <div class="col-md-10 offset-md-1">
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover table-striped text-center">
+                <thead class="thead-dark">
+                  <tr class="text-center">
+                    <th>Name of Applicant</th>
+                    <th>Application Type</th>
+                    <th>Application Number</th>
+                    <th>Date of Birth</th>
+                    <th>Payment Status</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="applicationDetails">
+                    <td>{{ applicationDetails.applicantName }}</td>
+                    <td>{{ reverseEnumLookup(ApplicationType, applicationDetails.applicationType) }}</td>
+                    <td>{{ applicationDetails.applicationNo }}</td>
+                    <td>{{ applicationDetails.dateOfBirth | date }}</td>
+                    <td>{{ reverseEnumLookup(PaymentStatus, applicationDetails.paymentStatus) }}</td>
+                    <td>{{ reverseEnumLookup(ApplicationStatus, applicationDetails.applicationStatus) }}</td>
+                  </tr>
+                  
+                  
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
+</div>

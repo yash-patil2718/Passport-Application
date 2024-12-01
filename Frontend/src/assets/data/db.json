@@ -1,0 +1,382 @@
+{
+  "users": [
+    {
+      "id": "167f",
+      "firstname": "Saurabh",
+      "middlename": "Khandu",
+      "lastname": "Lambe",
+      "dob": "1999-07-15",
+      "email": "saurabh123@gmail.com",
+      "gender": "male",
+      "mobile": "7030794688",
+      "username": "saurabh123",
+      "password": "Saurabh@123",
+      "confirmpassword": "Saurabh@123",
+      "agree": true,
+      "role": "User"
+    },
+    {
+      "id": "5d54",
+      "firstname": "Mayur",
+      "middlename": "Bhagwat",
+      "lastname": "Sarode",
+      "dob": "2001-05-15",
+      "email": "mayur123@gmail.com",
+      "gender": "male",
+      "mobile": "7896589568",
+      "username": "mayur123",
+      "password": "Mayur@123",
+      "confirmpassword": "Mayur@123",
+      "agree": true,
+      "role": "User"
+    },
+    {
+      "id": "3a75",
+      "firstname": "Admin",
+      "middlename": "Something",
+      "lastname": "Someone",
+      "dob": "1999-07-15",
+      "email": "admin123@gmail.com",
+      "gender": "male",
+      "mobile": "7030794688",
+      "username": "admin123",
+      "password": "Admin@123",
+      "confirmpassword": "Admin@123",
+      "agree": true,
+      "role": "Admin"
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "741044",
+      "name": "Saurabh Lambe",
+      "email": "saurabh1@gmail.com",
+      "subject": "feedback",
+      "message": "Work Faster for project work",
+      "feedbackStatus": "Pending",
+      "isEditing": false
+    },
+    {
+      "id": "485444",
+      "name": "Saurabh Lambe",
+      "email": "saurabh123@gmail.com",
+      "subject": "feedback",
+      "message": "Nice work keep it up!",
+      "feedbackStatus": "Pending",
+      "isEditing": false
+    },
+    {
+      "id": "693651",
+      "name": "Saurabh Lambe",
+      "email": "saurabh123@gmail.com",
+      "subject": "feedback",
+      "message": "Work Faster Else You will get in problem",
+      "feedbackStatus": "Pending",
+      "isEditing": false
+    },
+    {
+      "id": 829303,
+      "name": "Saurabh Lambe",
+      "email": "saurabh123@gmail.com",
+      "subject": "feedback",
+      "message": "Payment process is working now Thank you for co-operation. :}",
+      "feedbackStatus": "Pending",
+      "isEditing": false
+    }
+  ],
+  "complaints": [
+    {
+      "id": "858815",
+      "name": "Saurabh Lambe",
+      "email": "saurabh1@gmail.com",
+      "subject": "complaint",
+      "message": "Payment process is not working",
+      "feedbackStatus": "Pending"
+    },
+    {
+      "id": "989307",
+      "name": "Saurabh Lambe",
+      "email": "saurabh123@gmail.com",
+      "subject": "complaint",
+      "message": "Work Faster otherwise load of work will increase",
+      "feedbackStatus": "Pending"
+    }
+  ],
+  "renewApplications": [
+    {
+      "id": "2456",
+      "applicationNumber": "8631555083",
+      "status": "New",
+      "payment": "Unpaid",
+      "serviceRequest": {
+        "applicationType": "Tatkal",
+        "passportPages": "pages60",
+        "validityPeriod": "years10",
+        "reissueReason": "Exhaustion of Pages",
+        "changeInExisting": "Appearance"
+      },
+      "applicant": {
+        "applicantName": "Saurabh",
+        "applicantSurName": "Lambe",
+        "aliases": "No",
+        "alias_names": "",
+        "changedname": "No",
+        "previous_name": "",
+        "dob": "1999-05-15",
+        "placeOfBirth": "Nashik",
+        "gender": "Male",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "country": "India",
+        "pan": "AFGD1254DS",
+        "voterId": "1254785896",
+        "passportNumber": "2027503800",
+        "dateOfIssue": "2024-07-26",
+        "placeOfIssue": "Nashik",
+        "maritalStatus": "Single",
+        "employmentType": "Private",
+        "organizationName": "",
+        "parentOrSpouseGovServant": "No",
+        "educationQualification": "Graduate and above",
+        "nonEcrEligible": "No",
+        "distinguishingMark": "Nothing",
+        "aadhaarNumber": "454686798851"
+      },
+      "feedback": {
+        "fatherName": "Khandu",
+        "fatherSurname": "Lambe",
+        "motherName": "Sunita",
+        "motherSurname": "Lambe",
+        "legalGuardianName": "Khandu",
+        "legalGuardianSurname": "Lambe",
+        "spouseName": "",
+        "spouseSurname": ""
+      },
+      "address": {
+        "houseNumber": "33, runwal villa",
+        "address_lane1": "Emerald Lane",
+        "address_lane2": "",
+        "city": "Pune",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "pin": "412051",
+        "country": "India",
+        "mobileNumber": "7030794688",
+        "telephoneNumber": ""
+      },
+      "emergency": {
+        "emergencyDetailName": "Khandu Lambe",
+        "emergencyDetailAddress": "33, Datta mandir road, Gangapur goan, Nashik",
+        "emergencyDetailMobileNo": "7030794688",
+        "emergencyDetailEmail": "khandu@gmail.com",
+        "emergencyDetailCity": "Nashik",
+        "district": "Nashik",
+        "pin": "422222",
+        "emergencyDetailState": "Maharashtra"
+      },
+      "questions": {
+        "criminalProceedings": "No",
+        "warrantSummons": "No",
+        "arrestWarrant": "No",
+        "departureOrder": "No",
+        "conviction": "No",
+        "passportRefusal": "No",
+        "passportImpounded": "No",
+        "passportRevoked": "No",
+        "foreignCitizenship": "No",
+        "otherPassport": "No",
+        "surrenderedPassport": "No",
+        "renunciation": "No",
+        "emergencyCertificate": "No",
+        "deported": "No",
+        "repatriated": "No"
+      },
+      "declaration": {
+        "chkDeclaration": true,
+        "placeOfApply": "Pune",
+        "dateOfApply": "2024-07-26"
+      }
+    }
+  ],
+  "newApplications": [
+    {
+      "id": "4df7",
+      "applicationNumber": "2027503800",
+      "status": "InProcess",
+      "payment": "Paid",
+      "serviceRequest": {
+        "applicationType": "Normal",
+        "passportPages": "pages60",
+        "validityPeriod": "years10"
+      },
+      "applicant": {
+        "applicantName": "Saurabh",
+        "applicantSurName": "Lambe",
+        "aliases": "Yes",
+        "alias_names": "Kingvirus",
+        "changedname": "No",
+        "previous_name": "",
+        "dob": "1999-05-15",
+        "placeOfBirth": "Nashik",
+        "gender": "Male",
+        "district": "Nashik",
+        "state": "Maharashtra",
+        "country": "India",
+        "pan": "AFGD1254DS",
+        "voterId": "1254785896",
+        "maritalStatus": "Single",
+        "employmentType": "Private",
+        "organizationName": "",
+        "parentOrSpouseGovServant": "No",
+        "educationQualification": "Graduate and above",
+        "nonEcrEligible": "No",
+        "distinguishingMark": "Nothing",
+        "aadhaarNumber": "454686798851"
+      },
+      "feedback": {
+        "fatherName": "Khandu",
+        "fatherSurname": "Lambe",
+        "motherName": "Sunita",
+        "motherSurname": "Lambe",
+        "legalGuardianName": "Khandu",
+        "legalGuardianSurname": "Lambe",
+        "spouseName": "",
+        "spouseSurname": ""
+      },
+      "address": {
+        "houseNumber": "33, runwal villa",
+        "address_lane1": "Emerald Lane",
+        "address_lane2": "",
+        "city": "Pune",
+        "district": "Pune",
+        "state": "Maharashtra",
+        "pin": "412051",
+        "country": "India",
+        "mobileNumber": "7030794688",
+        "telephoneNumber": ""
+      },
+      "emergency": {
+        "emergencyDetailName": "Khandu Lambe",
+        "emergencyDetailAddress": "33, Datta mandir road, Gangapur goan, Nashik",
+        "emergencyDetailMobileNo": "7030794688",
+        "emergencyDetailEmail": "khandu@gmail.com",
+        "emergencyDetailCity": "Nashik",
+        "district": "Nashik",
+        "pin": "422222",
+        "emergencyDetailState": "Maharashtra"
+      },
+      "questions": {
+        "criminalProceedings": "No",
+        "warrantSummons": "No",
+        "arrestWarrant": "No",
+        "departureOrder": "No",
+        "conviction": "No",
+        "passportRefusal": "No",
+        "passportImpounded": "No",
+        "passportRevoked": "No",
+        "foreignCitizenship": "No",
+        "otherPassport": "No",
+        "surrenderedPassport": "No",
+        "renunciation": "No",
+        "emergencyCertificate": "No",
+        "deported": "No",
+        "repatriated": "No"
+      },
+      "declaration": {
+        "chkDeclaration": true,
+        "placeOfApply": "Nashik",
+        "dateOfApply": "2024-07-26"
+      },
+      "applicationSource": "new"
+    },
+    {
+      "id": "1ebd",
+      "applicationNumber": "1057891161",
+      "status": "Pending",
+      "payment": "Unpaid",
+      "serviceRequest": {
+        "applicationType": "Tatkal",
+        "passportPages": "pages36",
+        "validityPeriod": "upTo18"
+      },
+      "applicant": {
+        "applicantName": "Kingvirus",
+        "applicantSurName": "Torreto",
+        "aliases": "No",
+        "alias_names": "",
+        "changedname": "No",
+        "previous_name": "",
+        "dob": "1999-07-15",
+        "placeOfBirth": "Somewhere",
+        "gender": "Male",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "country": "India",
+        "pan": "AFGD1254EW",
+        "voterId": "1254785526",
+        "maritalStatus": "Single",
+        "employmentType": "Private",
+        "organizationName": "",
+        "parentOrSpouseGovServant": "No",
+        "educationQualification": "Graduate and above",
+        "nonEcrEligible": "No",
+        "distinguishingMark": "Nothing",
+        "aadhaarNumber": "456789852996"
+      },
+      "feedback": {
+        "fatherName": "Someone",
+        "fatherSurname": "Something",
+        "motherName": "Someone",
+        "motherSurname": "Something",
+        "legalGuardianName": "Someone",
+        "legalGuardianSurname": "Something",
+        "spouseName": "",
+        "spouseSurname": ""
+      },
+      "address": {
+        "houseNumber": "45,somewhere",
+        "address_lane1": "Something Lane",
+        "address_lane2": "",
+        "city": "Mumbai city",
+        "district": "Mumbai City",
+        "state": "Maharashtra",
+        "pin": "456859",
+        "country": "India",
+        "mobileNumber": "8523697412",
+        "telephoneNumber": ""
+      },
+      "emergency": {
+        "emergencyDetailName": "Someone Something",
+        "emergencyDetailAddress": "45, somewhere lane  ",
+        "emergencyDetailMobileNo": "7896541235",
+        "emergencyDetailEmail": "someone@gmail.com",
+        "emergencyDetailCity": "mumbai city",
+        "district": "Mumbai City",
+        "pin": "456852",
+        "emergencyDetailState": "Maharashtra"
+      },
+      "questions": {
+        "criminalProceedings": "No",
+        "warrantSummons": "No",
+        "arrestWarrant": "No",
+        "departureOrder": "No",
+        "conviction": "No",
+        "passportRefusal": "No",
+        "passportImpounded": "No",
+        "passportRevoked": "No",
+        "foreignCitizenship": "No",
+        "otherPassport": "Yes",
+        "surrenderedPassport": "No",
+        "renunciation": "Yes",
+        "emergencyCertificate": "Yes",
+        "deported": "Yes",
+        "repatriated": "Yes"
+      },
+      "declaration": {
+        "chkDeclaration": true,
+        "placeOfApply": "Mumbai ",
+        "dateOfApply": "2024-07-27"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1661 @@
+<div class="wrapper">
+    <app-header></app-header>
+
+    <main class="container " id="renewDiv">
+        <div class="row justify-content-center align-items-center">
+            <!-- Tabbed Form Section -->
+            <div class="col-md-12" id="tabbedForm">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center m-1"><strong>Renew Passport Application Form</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs bg-light" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 1 }" (click)="setTab(1)"
+                                    type="button">Service Required</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 2 }" (click)="setTab(2)"
+                                    type="button">Applicants Details</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 3 }" (click)="setTab(3)"
+                                    type="button">Family Details</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 4 }" (click)="setTab(4)"
+                                    type="button">Residential Details</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 5 }" (click)="setTab(5)"
+                                    type="button">Emergency Contact</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 6 }" (click)="setTab(6)"
+                                    type="button">Other</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" [ngClass]="{ 'active': currentTab === 7 }" (click)="setTab(7)"
+                                    type="button">Self Declaration</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 1 }" id="service">
+                                <!-- Service Tab Content -->
+                                <form [formGroup]="serviceRequestForm" [class.active]="currentTab === 1"
+                                    class="p-5 bg-light needs-validation">
+                                    <!-- Existing Section 1.1 -->
+                                    <div class="row m-1">
+                                        <label for="applicationtype">Type of Application</label><br>
+                                        <select id="applicationtype" formControlName="applicationType"
+                                            class="form-select">
+                                            <option value="" disabled>-- Select an application type --</option>
+                                            <!-- Dynamically populate the options using ngFor and the converted enum array -->
+                                            <option *ngFor="let type of applicationTypes" [value]="type.value">
+                                                {{ type.key }}
+                                            </option>
+                                        </select>
+                                        <div *ngIf="serviceRequestForm.get('applicationType')?.invalid && (serviceRequestForm.get('applicationType')?.touched || serviceRequestForm.get('applicationType')?.dirty)"
+                                            class="text-danger">
+                                            <div
+                                                *ngIf="serviceRequestForm.get('applicationType')?.errors?.['required']">
+                                                Application Type is required.
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Existing Select dropdowns -->
+                                    <div class="form-group m-2">
+                                        <label for="pagesRequried">Type of Passport Booklet</label><br>
+                                        <select id="pagesRequried" formControlName="pagesRequried" class="form-select">
+                                            <option value="" disabled>-- Select a passport booklet type --</option>
+                                            <!-- Use *ngFor to iterate over the pagesRequired array -->
+                                            <option *ngFor="let pageType of pagesRequired" [value]="pageType.value">
+                                                {{ pageType.key }}
+                                            </option>
+                                        </select>
+                                        <span class="text-danger"
+                                            *ngIf="serviceRequestForm.get('pagesRequried')?.invalid && serviceRequestForm.get('pagesRequried')?.touched">
+                                            Please select a passport booklet type.
+                                        </span>
+                                    </div>
+
+                                    <!-- Additional Section 1.1 -->
+                                    <div class="form-group m-2">
+                                        <label for="validityRequired">Validity Required</label><br>
+                                        <small>(For minors between 15 and 18 years)</small><br>
+                                        <select id="validityRequired" formControlName="validityRequired"
+                                            class="form-select">
+                                            <option value="" disabled>-- Select a validity period --</option>
+                                            <!-- Use *ngFor to iterate over the validityPeriods array -->
+                                            <option *ngFor="let period of validitiesRequired" [value]="period.value">
+                                                {{ period.key }}
+                                            </option>
+                                        </select>
+                                        <span class="text-danger"
+                                            *ngIf="serviceRequestForm.get('validityRequired')?.invalid && serviceRequestForm.get('validityRequired')?.touched">
+                                            Please select a validity period.
+                                        </span>
+                                    </div>
+
+                                    <div class="form-group m-2">
+                                        <label>Specify reason(s)</label> &nbsp;&nbsp;
+                                        <select class="form-select" formControlName="reasonforRenewal">
+                                            <option value="" disabled>-- Select --</option>
+                                            <!-- Use *ngFor to iterate over the reissueReasons array -->
+                                            <option *ngFor="let reason of reissueReasons" [value]="reason.value">
+                                                {{ reason.key }}
+                                            </option>
+                                        </select>
+                                        <span class="text-danger"
+                                            *ngIf="serviceRequestForm.get('reasonforRenewal')?.invalid && serviceRequestForm.get('reasonforRenewal')?.touched">
+                                            Please specify re-issue reason.
+                                        </span>
+                                    </div>
+                                    <div class="form-group m-2">
+                                        <label>If change in existing personal particulars, specify reason(s)</label>
+                                        &nbsp;&nbsp;
+                                        <select class="form-select" formControlName="changeInAppearance">
+                                            <option value="" disabled>-- Select --</option>
+                                            <!-- Use *ngFor to iterate over the changeInExistingReasons array -->
+                                            <option *ngFor="let reason of changeInExistingReasons"
+                                                [value]="reason.value">
+                                                {{ reason.key }}
+                                            </option>
+                                        </select>
+                                    </div>
+
+
+                                    <div class="row mb-3 mt-3">
+                                        <div class="form-buttons text-center mt-1">
+                                            <button type="submit" id="btnNext" class="btn btn-secondary"
+                                                (click)="showNextTab(2)">Next</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 2 }" id="applicant">
+                                <form [formGroup]="applicantForm" [class.active]="currentTab === 2">
+                                    <div class="row g-3">
+                                        <!-- Row 1 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="applicantFirstName">Applicant's Name</label>
+                                                <input type="text" id="applicantFirstName" class="form-control"
+                                                    formControlName="applicantFirstName"
+                                                    placeholder="Enter Applicant's Name">
+                                                <span
+                                                    *ngIf="applicantForm.get('applicantFirstName')?.touched && applicantForm.get('applicantFirstName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('applicantFirstName')?.errors?.['required']">Please
+                                                        enter the applicant's name.</span>
+                                                    <span
+                                                        *ngIf="applicantForm.get('applicantFirstName')?.errors?.['minlength']">Name
+                                                        must be at least 2 characters long.</span>
+                                                    <span
+                                                        *ngIf="applicantForm.get('applicantFirstName')?.errors?.['maxlength']">Name
+                                                        cannot exceed 50 characters.</span>
+                                                </span>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="applicantForm.get('applicantName')?.hasError('lettersOnly') && applicantForm.get('applicantName')?.touched">
+                                                    The name should contain letters only.
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="applicantLastName">Surname</label>
+                                                <input type="text" id="applicantLastName" class="form-control"
+                                                    formControlName="applicantLastName" placeholder="Enter Surname">
+                                                <span
+                                                    *ngIf="applicantForm.get('applicantLastName')?.touched && applicantForm.get('applicantLastName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('applicantLastName')?.errors?.['required']">Please
+                                                        enter the applicant's surname.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 2 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label>Are you known by any other names (isAliases)?</label><br>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isAliases" id="isAliasesYes" value="true">
+                                                    <label class="form-check-label" for="isAliasesYes">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isAliases" id="isAliasesNo" value="false">
+                                                    <label class="form-check-label" for="isAliasesNo">No</label>
+                                                </div>
+                                                <span
+                                                    *ngIf="applicantForm.get('isAliases')?.touched && applicantForm.get('isAliases')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('isAliases')?.errors?.['required']">Please
+                                                        select an option.</span>
+                                                </span>
+                                                <div *ngIf="applicantForm.get('isAliases')?.value === 'true'">
+                                                    <input type="text" class="form-control mt-2"
+                                                        formControlName="aliasName"
+                                                        placeholder="Provide alias names if yes">
+                                                    <span
+                                                        *ngIf="applicantForm.get('aliasName')?.touched && applicantForm.get('aliasName')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="applicantForm.get('aliasName')?.errors?.['required']">Alias
+                                                            names are required.</span>
+                                                        <span
+                                                            *ngIf="applicantForm.get('aliasName')?.errors?.['minlength']">Alias
+                                                            names must be at least 1 character long.</span>
+                                                        <span
+                                                            *ngIf="applicantForm.get('aliasName')?.errors?.['maxlength']">Alias
+                                                            names cannot be longer than 45 characters.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label>Have you ever changed your name?</label><br>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isChangedName" id="isChangedNameYes"
+                                                        value="true">
+                                                    <label class="form-check-label" for="isChangedNameYes">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isChangedName" id="isChangedNameNo" value="false">
+                                                    <label class="form-check-label" for="isChangedNameNo">No</label>
+                                                </div>
+                                                <span
+                                                    *ngIf="applicantForm.get('isChangedName')?.touched && applicantForm.get('isChangedName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('isChangedName')?.errors?.['required']">Please
+                                                        select an option.</span>
+                                                </span>
+                                                <div *ngIf="applicantForm.get('isChangedName')?.value === 'true'">
+                                                    <input type="text" class="form-control mt-2"
+                                                        formControlName="previousName"
+                                                        placeholder="Provide previous name if yes">
+                                                    <span
+                                                        *ngIf="applicantForm.get('previousName')?.touched && applicantForm.get('previousName')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="applicantForm.get('previousName')?.errors?.['required']">Previous
+                                                            name is required.</span>
+                                                        <span
+                                                            *ngIf="applicantForm.get('previousName')?.errors?.['minlength']">Previous
+                                                            name must be at least 1 character long.</span>
+                                                        <span
+                                                            *ngIf="applicantForm.get('previousName')?.errors?.['maxlength']">Previous
+                                                            name cannot be longer than 45 characters.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 3 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label>Select Gender</label>
+                                                <select id="gender" class="form-select" formControlName="gender">
+                                                    <option value="">-- Select Gender --</option>
+                                                    <!-- Use *ngFor to iterate over the genders array -->
+                                                    <option *ngFor="let gender of genders" [value]="gender.value">
+                                                        {{ gender.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="applicantForm.get('gender')?.touched && applicantForm.get('gender')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('gender')?.errors?.['required']">Please
+                                                        select Gender.</span>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="dob">Date of Birth (DD-MM-YYYY)</label>
+                                                <input type="date" id="dob" class="form-control" formControlName="dob"
+                                                    placeholder="Enter Date of Birth">
+                                                <span
+                                                    *ngIf="applicantForm.get('dob')?.touched && applicantForm.get('dob')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span *ngIf="applicantForm.get('dob')?.errors?.['required']">Please
+                                                        select Date of Birth.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 4 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="placeOfBirth">Place of Birth (Village or Town or
+                                                    City)</label>
+                                                <input type="text" id="placeOfBirth" class="form-control"
+                                                    formControlName="placeOfBirth" placeholder="Enter Place of Birth">
+                                                <span
+                                                    *ngIf="applicantForm.get('placeOfBirth')?.touched && applicantForm.get('placeOfBirth')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('placeOfBirth')?.errors?.['required']">Please
+                                                        enter Place of Birth.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="district">District</label>
+                                                <input id="district" type="text" class="form-control"
+                                                    formControlName="district" autocomplete="off" />
+                                                <span
+                                                    *ngIf="applicantForm.get('district')?.touched && applicantForm.get('district')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('district')?.errors?.['required']">Please
+                                                        select a District.</span>
+                                                </span>
+                                            </div>
+
+                                        </div>
+
+                                        <!-- Row 5 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="state">State</label>
+                                                <select id="state" class="form-select" formControlName="state">
+                                                    <option value="">-- Select State --</option>
+                                                    <option *ngFor="let state of states" [value]="state.value">{{
+                                                        state.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="applicantForm.get('state')?.touched && applicantForm.get('state')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('state')?.errors?.['required']">Please
+                                                        select a State.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Country</label>
+                                                <select id="country" class="form-select" formControlName="country">
+                                                    <option value="">Select Country</option>
+                                                    <option *ngFor="let country of countries" [value]="country.value">
+                                                        {{ country.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="applicantForm.get('country')?.touched && applicantForm.get('country')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('country')?.errors?.['required']">Please
+                                                        select a country.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Row 6 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Citizenship of India by*:</label>
+                                                <select name="citizenship" class="form-control"
+                                                    formControlName="citizenship" required>
+                                                    <option value="">Select options</option>
+                                                    <!-- Use *ngFor to iterate over the citizenships array -->
+                                                    <option *ngFor="let citizenship of citizenships"
+                                                        [value]="citizenship.value">
+                                                        {{ citizenship.key }}
+                                                    </option>
+                                                </select>
+                                                <div class="invalid-feedback"
+                                                    *ngIf="applicantForm.get('citizenship')?.invalid && applicantForm.get('citizenship')?.touched">
+                                                    Please select your citizenship option.
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="aadharcardNo">Aadhaar Number</label>
+                                                <input type="text" id="aadharcardNo" class="form-control"
+                                                    formControlName="aadharcardNo" maxlength="12"
+                                                    placeholder="Enter Aadhaar Number">
+                                                <span
+                                                    *ngIf="applicantForm.get('aadharcardNo')?.touched && applicantForm.get('aadharcardNo')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('aadharcardNo')?.errors?.['required']">Please
+                                                        enter your Aadhaar number.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="pancardNo">PAN (If available)</label>
+                                                <input type="text" id="pan" class="form-control"
+                                                    formControlName="pancardNo" maxlength="10"
+                                                    placeholder="Enter PAN (If available)">
+                                                <span
+                                                    *ngIf="applicantForm.get('pancardNo')?.touched && applicantForm.get('pancardNo')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('pancardNo')?.errors?.['required']">Please
+                                                        enter PAN card number.</span>
+                                                    <span
+                                                        *ngIf="applicantForm.get('pancardNo')?.errors?.['maxlength']">PAN
+                                                        card
+                                                        number cannot exceed 10 characters.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="voterIdNo">Voter ID (If available)</label>
+                                                <input type="text" id="voterIdNo" class="form-control"
+                                                    formControlName="voterIdNo" maxlength="10"
+                                                    placeholder="Enter Voter ID (If available)">
+                                                <span
+                                                    *ngIf="applicantForm.get('voterIdNo')?.touched && applicantForm.get('voterIdNo')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('voterIdNo')?.errors?.['required']">Please
+                                                        enter Voter ID.</span>
+                                                    <span
+                                                        *ngIf="applicantForm.get('voterIdNo')?.errors?.['maxlength']">Voter
+                                                        ID cannot exceed 10 characters.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 7 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="employementType">Employment Type</label>
+                                                <select id="employementType" class="form-select"
+                                                    formControlName="employementType">
+                                                    <option value="">-- Select Employment Type --</option>
+                                                    <!-- Use *ngFor to iterate over the employementTypes array -->
+                                                    <option *ngFor="let employementType of employmentTypes"
+                                                        [value]="employementType.value">
+                                                        {{ employementType.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="applicantForm.get('employementType')?.touched && applicantForm.get('employementType')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('employementType')?.errors?.['required']">Please
+                                                        select your employment type.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="organizationName">If employed in Government/ Statutory Body/
+                                                    PSU, specify organization name</label>
+                                                <input type="text" id="organizationName" class="form-control"
+                                                    formControlName="organizationName"
+                                                    placeholder="Enter Organization Name">
+                                                <span
+                                                    *ngIf="applicantForm.get('organizationName')?.touched && applicantForm.get('organizationName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('organizationName')?.errors?.['required']">Please
+                                                        fill employed type.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 8 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="educationQualification">Educational Qualification</label>
+                                                <select id="educationQualification" class="form-select"
+                                                    formControlName="educationQualification">
+                                                    <option value="">-- Select Educational Qualification --</option>
+                                                    <!-- Use *ngFor to iterate over the educationQualifications array -->
+                                                    <option *ngFor="let qualification of educationalQualifications"
+                                                        [value]="qualification.value">
+                                                        {{ qualification.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="applicantForm.get('educationQualification')?.touched && applicantForm.get('educationQualification')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('educationQualification')?.errors?.['required']">Please
+                                                        select your educational qualification.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="distinguishMark">Visible Distinguishing Mark</label>
+                                                <input type="text" id="distinguishMark" class="form-control"
+                                                    formControlName="distinguishMark"
+                                                    placeholder="Enter Visible Distinguishing Mark">
+                                                <span
+                                                    *ngIf="applicantForm.get('distinguishMark')?.touched && applicantForm.get('distinguishMark')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('distinguishMark')?.errors?.['required']">Please
+                                                        fill Visible Distinguishing Mark.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 9 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="maritalStatus">Marital Status</label>
+                                                <select id="maritalStatus" class="form-select"
+                                                    formControlName="maritalStatus">
+                                                    <option value="">-- Select Marital Status --</option>
+                                                    <!-- Use *ngFor to iterate over the maritalStatuses array -->
+                                                    <option *ngFor="let status of maritalStatuses"
+                                                        [value]="status.value">
+                                                        {{ status.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="applicantForm.get('maritalStatus')?.touched && applicantForm.get('maritalStatus')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('maritalStatus')?.errors?.['required']">Please
+                                                        select your marital status.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mt-5">
+                                            <div class="mb-1">
+                                                <label>Is either of your parent (in case of minor)/ spouse, a government
+                                                    servant?</label>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isParentOrSpouceGovermentServent"
+                                                        id="isParentOrSpouceGovermentServentYes" value="true">
+                                                    <label class="form-check-label"
+                                                        for="isParentOrSpouceGovermentServentYes">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isParentOrSpouceGovermentServent"
+                                                        id="isParentOrSpouceGovermentServentNo" value="false">
+                                                    <label class="form-check-label"
+                                                        for="isParentOrSpouceGovermentServentNo">No</label>
+                                                </div>
+                                                <span
+                                                    *ngIf="applicantForm.get('isParentOrSpouceGovermentServent')?.touched && applicantForm.get('isParentOrSpouceGovermentServent')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('isParentOrSpouceGovermentServent')?.errors?.['required']">Please
+                                                        select an option.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-2">
+                                            <div class="col-md-6 mt-4">
+                                                <label>Are you eligible for Non-ECR category?</label>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isNonEcrEligible" id="isNonEcrEligibleYes"
+                                                        value="true">
+                                                    <label class="form-check-label"
+                                                        for="isNonEcrEligibleYes">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isNonEcrEligible" id="isNonEcrEligibleNo"
+                                                        value="false">
+                                                    <label class="form-check-label" for="isNonEcrEligibleNo">No</label>
+                                                </div>
+                                                <span
+                                                    *ngIf="applicantForm.get('isNonEcrEligible')?.touched && applicantForm.get('isNonEcrEligible')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="applicantForm.get('isNonEcrEligible')?.errors?.['required']">Please
+                                                        select an option.</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="previousPassportNumber">Previous Passport Number</label>
+                                                    <input type="text" id="previousPassportNumber" class="form-control"
+                                                        formControlName="previousPassportNumber"
+                                                        placeholder="Enter Passport Number">
+                                                    <span
+                                                        *ngIf="applicantForm.get('previousPassportNumber')?.touched && applicantForm.get('previousPassportNumber')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="applicantForm.get('previousPassportNumber')?.errors?.['required']">Please
+                                                            enter a valid Passport Number.</span>
+                                                        <span
+                                                            *ngIf="applicantForm.get('previousPassportNumber')?.errors?.['maxlength']">Passport
+                                                            Number cannot exceed 10 characters.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="dateOfIssue">Date of Issue</label>
+                                                    <input type="date" id="dateOfIssue" class="form-control"
+                                                        formControlName="dateOfIssue">
+                                                    <span
+                                                        *ngIf="applicantForm.get('dateOfIssue')?.touched && applicantForm.get('dateOfIssue')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="applicantForm.get('dateOfIssue')?.errors?.['required']">Please
+                                                            select the Date of Issue.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="placeOfIssue">Place of Issue</label>
+                                                    <input type="text" id="placeOfIssue" class="form-control"
+                                                        formControlName="placeOfIssue"
+                                                        placeholder="Enter Place of Issue">
+                                                    <span
+                                                        *ngIf="applicantForm.get('placeOfIssue')?.touched && applicantForm.get('placeOfIssue')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="applicantForm.get('placeOfIssue')?.errors?.['required']">Please
+                                                            enter the Place of Issue.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 mt-3">
+                                        <div class="form-buttons text-center mt-1">
+                                            <button type="button" id="btnPrev" class="btn btn-secondary me-2"
+                                                (click)="PreviousTab()">Previous</button>
+                                            <button type="submit" id="btnNext" class="btn btn-secondary me-2"
+                                                (click)="showNextTab(3)">Next</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 3 }" id="family">
+                                <!-- family Details Tab Content -->
+                                <form [formGroup]="feedbackForm" [class.active]="currentTab === 3"
+                                    class="needs-validation">
+                                    <!-- row 1 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="fatherFirstName">Father's Given Name</label>
+                                                <input type="text" class="form-control" id="fatherFirstName"
+                                                    formControlName="fatherFirstName"
+                                                    placeholder="Enter Father's Given Name">
+                                                <span
+                                                    *ngIf="feedbackForm.get('fatherFirstName')?.touched && feedbackForm.get('fatherFirstName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('fatherFirstName')?.errors?.['required']">Please
+                                                        provide Father's Given Name.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="fatherSurname">Surname</label>
+                                                <input type="text" id="fatherSurname" class="form-control"
+                                                    formControlName="fatherSurname"
+                                                    placeholder="Enter Father's Surname">
+                                                <span
+                                                    *ngIf="feedbackForm.get('fatherSurname')?.touched && feedbackForm.get('fatherSurname')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('fatherSurname')?.errors?.['required']">Please
+                                                        provide Father's Surname.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- row 2 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="motherFirstName">Mother's Given Name</label>
+                                                <input type="text" id="motherFirstName" class="form-control"
+                                                    formControlName="motherFirstName"
+                                                    placeholder="Enter Mother's Given Name">
+                                                <span
+                                                    *ngIf="feedbackForm.get('motherFirstName')?.touched && feedbackForm.get('motherFirstName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('motherFirstName')?.errors?.['required']">Please
+                                                        provide Mother's Given Name.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="motherSurname">Surname</label>
+                                                <input type="text" id="motherSurname" class="form-control"
+                                                    formControlName="motherSurname"
+                                                    placeholder="Enter Mother's Surname">
+                                                <span
+                                                    *ngIf="feedbackForm.get('motherSurname')?.touched && feedbackForm.get('motherSurname')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('motherSurname')?.errors?.['required']">Please
+                                                        provide Mother's Surname.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row 3 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="leagalGuardianFirstName">Legal Guardian's Given
+                                                    Name<small>(If
+                                                        applicable)
+                                                        (Initials not allowed)</small></label>
+                                                <input type="text" id="leagalGuardianFirstName" class="form-control"
+                                                    formControlName="leagalGuardianFirstName"
+                                                    placeholder="Enter Legal Guardian's Given Name">
+                                                <span
+                                                    *ngIf="feedbackForm.get('leagalGuardianFirstName')?.touched && feedbackForm.get('leagalGuardianFirstName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('leagalGuardianFirstName')?.errors?.['required']">Please
+                                                        provide Legal Guardian's Given Name.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="leagalGuardianSurname">Surname</label>
+                                                <input type="text" id="leagalGuardianSurname" class="form-control"
+                                                    formControlName="leagalGuardianSurname"
+                                                    placeholder="Enter Legal Guardian's Surname">
+                                                <span
+                                                    *ngIf="feedbackForm.get('leagalGuardianSurname')?.touched && feedbackForm.get('leagalGuardianSurname')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('leagalGuardianSurname')?.errors?.['required']">Please
+                                                        provide Legal Guardian's Surname.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- row 4 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="spouceFirstName">Spouse's Given Name<small>(Given Name means
+                                                        First
+                                                        name
+                                                        followed by Middle name) </small></label>
+                                                <input type="text" id="spouceFirstName" class="form-control"
+                                                    formControlName="spouceFirstName"
+                                                    placeholder="Enter Spouse's Given Name">
+                                                <span
+                                                    *ngIf="feedbackForm.get('spouceFirstName')?.touched && feedbackForm.get('spouceFirstName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('spouceFirstName')?.errors?.['required']">Please
+                                                        provide Spouse's Given Name.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <div class="mb-3">
+                                                <label for="spouceSurname">Spouse's Surname</label>
+                                                <input type="text" id="spouceSurname" class="form-control"
+                                                    formControlName="spouceSurname"
+                                                    placeholder="Enter Spouse's Surname">
+                                                <span
+                                                    *ngIf="feedbackForm.get('spouceSurname')?.touched && feedbackForm.get('spouceSurname')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="feedbackForm.get('spouceSurname')?.errors?.['required']">Please
+                                                        provide Spouse's Surname.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 mt-3">
+                                        <div class="form-buttons text-center mt-1">
+                                            <button type="button" id="btnPrev" class="btn btn-secondary me-2"
+                                                (click)="PreviousTab()">Previous</button>
+                                            <button type="submit" id="btnNext" class="btn btn-secondary me-2"
+                                                (click)="showNextTab(4)">Next</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 4 }" id="residential">
+                                <!-- Residential Details Tab Content -->
+                                <form [formGroup]="addressForm" class="needs-validation">
+                                    <div class="row g-3">
+                                        <!-- Row 1 -->
+                                        <div class="col-md-6 ">
+                                            <div class="mb-1 mt-2">
+                                                <label for="houseNoAndName">House No. and Street Name</label>
+                                                <input type="text" id="houseNoAndName" class="form-control"
+                                                    formControlName="houseNoAndName"
+                                                    placeholder="Enter House No. and Street Name">
+                                                <span
+                                                    *ngIf="addressForm.get('houseNoAndName')?.touched && addressForm.get('houseNoAndName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('houseNoAndName')?.errors?.['required']">Please
+                                                        provide House No. and Street Name.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1 mt-2">
+                                                <label class="form-label">Address Lane 1:</label>
+                                                <input type="text" class="form-control" formControlName="addressLane1"
+                                                    placeholder="Enter Address Lane 1">
+                                                <span
+                                                    *ngIf="addressForm.get('addressLane1')?.touched && addressForm.get('addressLane1')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('addressLane1')?.errors?.['required']">Please
+                                                        enter Address Lane 1.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 2 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label class="form-label">Address Lane 2:</label>
+                                                <input type="text" class="form-control" formControlName="addressLane2"
+                                                    placeholder="Enter Address Lane 2">
+                                                <span
+                                                    *ngIf="addressForm.get('addressLane2')?.touched && addressForm.get('addressLane2')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('addressLane2')?.errors?.['required']">Please
+                                                        enter Address Lane 2.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label for="villageOrCityName">Village or Town or City</label>
+                                                <input type="text" id="villageOrCityName" class="form-control"
+                                                    formControlName="villageOrCityName"
+                                                    placeholder="Enter Village or Town or City">
+                                                <span
+                                                    *ngIf="addressForm.get('villageOrCityName')?.touched && addressForm.get('villageOrCityName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('villageOrCityName')?.errors?.['required']">Please
+                                                        provide Village or Town or City.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 3 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="district">District</label>
+                                                <input id="district" type="text" class="form-control"
+                                                    formControlName="district" autocomplete="off" />
+                                                <span
+                                                    *ngIf="addressForm.get('district')?.touched && addressForm.get('district')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('district')?.errors?.['required']">Please
+                                                        select a District.</span>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="state">State</label>
+                                                <select id="state" class="form-select" formControlName="state">
+                                                    <option value="">-- Select State --</option>
+                                                    <option *ngFor="let state of states" [value]="state.value">{{
+                                                        state.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="addressForm.get('state')?.touched && addressForm.get('state')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span *ngIf="addressForm.get('state')?.errors?.['required']">Please
+                                                        select a State.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 4 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label for="pincode">PIN</label>
+                                                <input type="text" id="pincode" class="form-control"
+                                                    formControlName="pincode" placeholder="Enter pincode"
+                                                    title="Max-length 6">
+                                                <span
+                                                    *ngIf="addressForm.get('pincode')?.touched && addressForm.get('pincode')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('pincode')?.errors?.['required']">Please
+                                                        provide a valid pincode.</span>
+                                                    <span
+                                                        *ngIf="addressForm.get('pincode')?.errors?.['pattern']">pincode
+                                                        must
+                                                        be 6 digits long.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Country</label>
+                                                <select id="country" class="form-select" formControlName="country">
+                                                    <option value="">Select Country</option>
+                                                    <option *ngFor="let country of countries" [value]="country.value">
+                                                        {{ country.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="addressForm.get('country')?.touched && addressForm.get('country')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('country')?.errors?.['required']">Please
+                                                        select a country.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 5 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label for="mobileNo">Mobile number</label>
+                                                <input type="text" id="mobileNo" class="form-control"
+                                                    formControlName="mobileNo" placeholder="Enter Mobile number">
+                                                <span
+                                                    *ngIf="addressForm.get('mobileNo')?.touched && addressForm.get('mobileNo')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('mobileNo')?.errors?.['required']">Please
+                                                        provide a valid Mobile number.</span>
+                                                    <span
+                                                        *ngIf="addressForm.get('mobileNo')?.errors?.['pattern']">Mobile
+                                                        number must be 10 digits long.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label for="telephoneNo">Telephone Number</label>
+                                                <input type="text" id="telephoneNo" class="form-control"
+                                                    formControlName="telephoneNo" placeholder="Enter Telephone Number">
+                                                <span
+                                                    *ngIf="addressForm.get('telephoneNo')?.touched && addressForm.get('telephoneNo')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('telephoneNo')?.errors?.['required']">Please
+                                                        provide a valid Telephone Number.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 mt-3">
+                                        <div class="form-buttons text-center mt-1">
+                                            <button type="button" id="btnPrev" class="btn btn-secondary me-2"
+                                                (click)="PreviousTab()">Previous</button>
+                                            <button type="submit" id="btnNext" class="btn btn-secondary me-2"
+                                                (click)="showNextTab(5)">Next</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 5 }" id="emergency">
+                                <!-- Emergency Contact Tab Content -->
+                                <form [formGroup]="emergencyForm" class="needs-validation">
+                                    <div class="row g-3">
+                                        <!-- Row 1 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1 mt-2">
+                                                <label for="emergencyContactName">Name</label>
+                                                <input type="text" id="emergencyContactName" class="form-control"
+                                                    formControlName="emergencyContactName" placeholder="Enter Name">
+                                                <span
+                                                    *ngIf="emergencyForm.get('emergencyContactName')?.touched && emergencyForm.get('emergencyContactName')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactName')?.errors?.['required']">Please
+                                                        provide Name.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1 mt-2">
+                                                <label for="emergencyContactAddress">Address</label>
+                                                <input type="text" id="emergencyContactAddress" class="form-control"
+                                                    formControlName="emergencyContactAddress"
+                                                    placeholder="Enter Address">
+                                                <span
+                                                    *ngIf="emergencyForm.get('emergencyContactAddress')?.touched && emergencyForm.get('emergencyContactAddress')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactAddress')?.errors?.['required']">Please
+                                                        provide Address.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 2 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1 ">
+                                                <label for="emergencyContactMobileNo">Mobile number</label>
+                                                <input type="text" id="emergencyContactMobileNo" class="form-control"
+                                                    formControlName="emergencyContactMobileNo"
+                                                    placeholder="Enter Mobile number">
+                                                <span
+                                                    *ngIf="emergencyForm.get('emergencyContactMobileNo')?.touched && emergencyForm.get('emergencyContactMobileNo')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactMobileNo')?.errors?.['required']">Please
+                                                        provide Mobile number.</span>
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactMobileNo')?.errors?.['pattern']">Mobile
+                                                        number must be 10 digits long.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1 ">
+                                                <label for="emergencyContactEmail">E-mail ID</label>
+                                                <input type="email" id="emergencyContactEmail" class="form-control"
+                                                    formControlName="emergencyContactEmail"
+                                                    placeholder="Enter E-mail ID">
+                                                <span
+                                                    *ngIf="emergencyForm.get('emergencyContactEmail')?.touched && emergencyForm.get('emergencyContactEmail')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactEmail')?.errors?.['required']">Please
+                                                        provide E-mail ID.</span>
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactEmail')?.errors?.['email']">Please
+                                                        provide a valid email address.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 3 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1 ">
+                                                <label for="emergencyContactCity">City</label>
+                                                <input type="text" id="emergencyContactCity" class="form-control"
+                                                    formControlName="emergencyContactCity" placeholder="Enter City">
+                                                <span
+                                                    *ngIf="emergencyForm.get('emergencyContactCity')?.touched && emergencyForm.get('emergencyContactCity')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('emergencyContactCity')?.errors?.['required']">Please
+                                                        provide City.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label for="district">District</label>
+                                                <input id="district" type="text" class="form-control"
+                                                    formControlName="district" autocomplete="off" />
+                                                <span
+                                                    *ngIf="emergencyForm.get('district')?.touched && emergencyForm.get('district')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('district')?.errors?.['required']">Please
+                                                        select a District.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Row 4 -->
+                                        <div class="col-md-6">
+                                            <div class="mb-1 ">
+                                                <label for="pincode">Pincode</label>
+                                                <input type="text" id="pincode" class="form-control"
+                                                    formControlName="pincode" placeholder="Enter pincode"
+                                                    title="Max-length 6">
+                                                <span
+                                                    *ngIf="emergencyForm.get('pincode')?.touched && emergencyForm.get('pincode')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="addressForm.get('pincode')?.errors?.['required']">Please
+                                                        provide a valid pincode.</span>
+                                                    <span
+                                                        *ngIf="emergencyForm.get('pincode')?.errors?.['pattern']">pincode
+                                                        must
+                                                        be
+                                                        6
+                                                        digits long.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-1">
+                                                <label for="state">State</label>
+                                                <select id="state" class="form-select" formControlName="state">
+                                                    <option value="">-- Select State --</option>
+                                                    <!-- Use *ngFor to iterate over the states array -->
+                                                    <option *ngFor="let state of states" [value]="state.value">
+                                                        {{ state.key }}
+                                                    </option>
+                                                </select>
+                                                <span
+                                                    *ngIf="emergencyForm.get('state')?.touched && emergencyForm.get('state')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="emergencyForm.get('state')?.errors?.['required']">Please
+                                                        select a State.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row mb-3 mt-3">
+                                        <div class="form-buttons text-center mt-1">
+                                            <button type="button" id="btnPrev" class="btn btn-secondary me-2"
+                                                (click)="PreviousTab()">Previous</button>
+                                            <button type="submit" id="btnNext" class="btn btn-secondary me-2"
+                                                (click)="showNextTab(6)">Next</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 6 }" id="other">
+                                <!-- Other Tab Content -->
+                                <form [formGroup]="questionsForm" class="needs-validation">
+                                    <label for=""><strong>Provide the following details if there are any criminal
+                                            proceedings pending against the applicant.</strong></label><br>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isCriminalProceedings">Are any proceedings in respect of an
+                                                    offence alleged to have been committed by you pending before a
+                                                    criminal court in India?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isCriminalProceedings" id="proceedingsYes"
+                                                        value="true"> <label for="proceedingsYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isCriminalProceedings" id="proceedingsNo"
+                                                        value="false">
+                                                    <label for="proceedingsNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isCriminalProceedings')?.touched && questionsForm.get('isCriminalProceedings')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isCriminalProceedings')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isWarrantSummons">Has any warrant or summons for your
+                                                    appearance been issued & pending before a court under any law for
+                                                    the time being in force?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isWarrantSummons" id="summonsYes" value="true">
+                                                    <label for="summonsYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isWarrantSummons" id="summonsNo" value="false">
+                                                    <label for="summonsNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isWarrantSummons')?.touched && questionsForm.get('isWarrantSummons')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isWarrantSummons')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row 2 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="iArrestWarrant">Has a warrant for your arrest been issued by
+                                                    a
+                                                    court
+                                                    under any law for the time being in force?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="iArrestWarrant" id="iArrestWarrantYes"
+                                                        value="true">
+                                                    <label for="iArrestWarrantYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="iArrestWarrant" id="iArrestWarrantNo"
+                                                        value="false">
+                                                    <label for="iArrestWarrantNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('iArrestWarrant')?.touched && questionsForm.get('iArrestWarrant')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('iArrestWarrant')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isDepartureOrder">Has an order prohibiting your departure
+                                                    from
+                                                    India
+                                                    been made by any court?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isDepartureOrder" id="isDepartureOrderYes"
+                                                        value="true">
+                                                    <label for="isDepartureOrderYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isDepartureOrder" id="isDepartureOrderNo"
+                                                        value="false">
+                                                    <label for="isDepartureOrderNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isDepartureOrder')?.touched && questionsForm.get('isDepartureOrder')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isDepartureOrder')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <label for=""><strong>Provide the following details if the applicant has been
+                                            convicted
+                                            by a court in India</strong></label><br><br>
+                                    <!-- row 3 -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mb-3">
+                                                <label for="iConviction">Have you, at any time during the period of five
+                                                    years immediately preceding the date of this application, been
+                                                    convicted
+                                                    by a court in India for any offence involving moral turpitude and
+                                                    sentenced in respect thereof to imprisonment for not less than two
+                                                    years?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="iConviction" id="iConvictionYes" value="true">
+                                                    <label for="iConvictionYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="iConviction" id="iConvictionNo" value="false">
+                                                    <label for="iConvictionNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('iConviction')?.touched && questionsForm.get('iConviction')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('iConviction')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for=""><strong>Provide the following details if the applicant has been
+                                            refused/denied passport.</strong></label><br>
+                                    <!-- row 4 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isPassportRefusal" class="mt-2">Have you ever been
+                                                    refused/denied
+                                                    passport? If yes, fill Column 6.6 of Supplementary Form</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isPassportRefusal" id="isPassportRefusalYes"
+                                                        value="true"> <label for="isPassportRefusalYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isPassportRefusal" id="isPassportRefusalNo"
+                                                        value="false">
+                                                    <label for="isPassportRefusalNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isPassportRefusal')?.touched && questionsForm.get('isPassportRefusal')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isPassportRefusal')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isPassportImpounded" class="mt-2">Has your passport ever
+                                                    been
+                                                    impounded?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isPassportImpounded"
+                                                        id="isPassportImpoundedYes" value="true"> <label
+                                                        for="isPassportImpoundedYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isPassportImpounded" id="isPassportImpoundedNo"
+                                                        value="false"> <label for="isPassportImpoundedNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isPassportImpounded')?.touched && questionsForm.get('isPassportImpounded')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isPassportImpounded')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row 5 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="ispassportRevoked" class="mt-2">Has your passport ever been
+                                                    revoked?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="ispassportRevoked" id="ispassportRevokedYes"
+                                                        value="true"> <label for="ispassportRevokedYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="ispassportRevoked" id="ispassportRevokedNo"
+                                                        value="false">
+                                                    <label for="ispassportRevokedNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('ispassportRevoked')?.touched && questionsForm.get('ispassportRevoked')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('ispassportRevoked')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for=""><strong>Provide the following details if applicant has applied for or
+                                            been
+                                            granted foreign citizenship.</strong></label><br><br>
+                                    <!-- row 6 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isForeignCitizenship">Have you ever been granted citizenship
+                                                    by
+                                                    any other region/country?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isForeignCitizenship"
+                                                        id="isForeignCitizenshipYes" value="turned_in_not"> <label
+                                                        for="isForeignCitizenshipYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isForeignCitizenship"
+                                                        id="isForeignCitizenshipNo" value="false"> <label
+                                                        for="isForeignCitizenshipNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isForeignCitizenship')?.touched && questionsForm.get('isForeignCitizenship')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isForeignCitizenship')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isotherPassport">Have you ever held the passport of any
+                                                    other
+                                                    region/country at any time?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isotherPassport" id="isotherPassportYes"
+                                                        value="true">
+                                                    <label for="isotherPassportYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isotherPassport" id="isotherPassportNo"
+                                                        value="false">
+                                                    <label for="isotherPassportNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isotherPassport')?.touched && questionsForm.get('isotherPassport')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isotherPassport')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row 7 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isSurrenderedPassport">Have you ever surrendered your Indian
+                                                    passport?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isSurrenderedPassport"
+                                                        id="isSurrenderedPassportYes" value="true"> <label
+                                                        for="isSurrenderedPassportYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isSurrenderedPassport"
+                                                        id="isSurrenderedPassportNo" value="false"> <label
+                                                        for="isSurrenderedPassportNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isSurrenderedPassport')?.touched && questionsForm.get('isSurrenderedPassport')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isSurrenderedPassport')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isRenunciation">Have you ever applied for isRenunciation of
+                                                    Indian
+                                                    citizenship?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isRenunciation" id="isRenunciationYes"
+                                                        value="true">
+                                                    <label for="isRenunciationYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isRenunciation" id="isRenunciationNo"
+                                                        value="false">
+                                                    <label for="isRenunciationNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isRenunciation')?.touched && questionsForm.get('isRenunciation')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isRenunciation')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for=""><strong>Provide the following details if applicant has returned to
+                                            India
+                                            on Emergency Certificate</strong></label><br><br>
+                                    <!-- row 7 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isEmergencyCertificate">Have you ever returned to India on
+                                                    Emergency Certificate (EC)?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isEmergencyCertificate"
+                                                        id="isEmergencyCertificateYes" value="true"> <label
+                                                        for="isEmergencyCertificateYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isEmergencyCertificate"
+                                                        id="isEmergencyCertificateNo" value="false"> <label
+                                                        for="isEmergencyCertificateNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isEmergencyCertificate')?.touched && questionsForm.get('isEmergencyCertificate')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isEmergencyCertificate')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isDeported">Have you ever been isDeported from any
+                                                    country?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isDeported" id="isDeportedYes" value="true">
+                                                    <label for="isDeportedYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isDeported" id="isDeportedNo" value="false">
+                                                    <label for="isDeportedNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isDeported')?.touched && questionsForm.get('isDeported')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isDeported')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- row 7 -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="isRepatriated">Have you ever been repatriated from any
+                                                    country
+                                                    back to India?</label>
+                                                <div>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isRepatriated" id="isRepatriatedYes"
+                                                        value="true">
+                                                    <label for="isRepatriatedYes">Yes</label>
+                                                    <input class="form-check-input" type="radio"
+                                                        formControlName="isRepatriated" id="isRepatriatedNo" value="false">
+                                                    <label for="isRepatriatedNo">No</label>
+                                                    <span
+                                                        *ngIf="questionsForm.get('isRepatriated')?.touched && questionsForm.get('isRepatriated')?.invalid"
+                                                        class="text-danger fw-medium">
+                                                        <span
+                                                            *ngIf="questionsForm.get('isRepatriated')?.errors?.['required']">Please
+                                                            select an option.</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3 mt-3">
+                                        <div class="form-buttons text-center mt-1">
+                                            <button type="button" id="btnPrev" class="btn btn-secondary me-2"
+                                                (click)="PreviousTab()">Previous</button>
+                                            <button type="submit" id="btnNext" class="btn btn-secondary me-2"
+                                                (click)="showNextTab(7)">Next</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" [ngClass]="{ 'show active': currentTab === 7 }" id="declaration">
+                                <!-- Self Declaration Tab Content -->
+                                <form [formGroup]="declarationForm">
+                                    <div class="form-check py-1">
+                                        <p>I owe allegiance to the sovereignty, unity & integrity of India, and have not
+                                            voluntarily acquired citizenship or travel document of any other country. I
+                                            have not lost, surrendered or been deprived of the citizenship of India. I
+                                            have not contravened any of the conditions relating to the possession and
+                                            use of an Indian passport.
+                                        </p>
+
+                                        <p>
+                                            I affirm that the information and particulars given by me in this form are
+                                            true and correct. I further state that I am not suppressing any material
+                                            information in this regard. I further affirm that the enclosures and
+                                            documentary proof submitted in support of my application for an Indian
+                                            passport are authentic and solely pertain to me and I am fully responsible
+                                            for the accuracy of the same. I am liable to be penalized or prosecuted if
+                                            found otherwise. I am aware that under the Passports Act, 1967 it is a
+                                            criminal offence to furnish any false information or to suppress any
+                                            material information with a view to obtaining passport or travel document.
+                                        </p>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                formControlName="isAcceptTermsAndCondition"
+                                                id="isAcceptTermsAndCondition" required>
+                                            <label class="form-check-label" for="isAcceptTermsAndCondition">
+                                                <b>I have read and understood the contents of the above and by
+                                                    submitting this form certify that all the information submitted byme
+                                                    in the form is bonafide.</b>
+                                            </label>
+                                            <span
+                                                *ngIf="declarationForm.get('isAcceptTermsAndCondition')?.touched && declarationForm.get('isAcceptTermsAndCondition')?.invalid"
+                                                class="text-danger fw-medium">
+                                                <span
+                                                    *ngIf="declarationForm.get('isAcceptTermsAndCondition')?.errors?.['required']">You
+                                                    must accept the terms and conditions.</span>
+                                            </span>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="place">Place</label><br>
+                                                <input type="text" id="place" formControlName="place"
+                                                    placeholder="Enter Place" class="form-control" required>
+                                                <span
+                                                    *ngIf="declarationForm.get('place')?.touched && declarationForm.get('place')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="declarationForm.get('place')?.errors?.['required']">Please
+                                                        enter the place where you are applying.</span>
+                                                </span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="dateOfAppApplied">Date</label><br>
+                                                <input type="date" id="dateOfAppApplied"
+                                                    formControlName="dateOfAppApplied" class="form-control" required>
+                                                <span
+                                                    *ngIf="declarationForm.get('dateOfAppApplied')?.touched && declarationForm.get('dateOfAppApplied')?.invalid"
+                                                    class="text-danger fw-medium">
+                                                    <span
+                                                        *ngIf="declarationForm.get('dateOfAppApplied')?.errors?.['required']">Please
+                                                        select the date of application.</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group px-0 py-1">
+                                                <label>
+                                                    <b>Amount to be Paid: </b>
+                                                    <input type="text" class="form-control" name="amount_paid"
+                                                        value="Rs. 2500" size="200" readonly>
+                                                </label>
+                                            </div>
+                                            <div class="form-buttons text-center mt-1">
+                                                <button type="button" id="btnPrev" class="btn btn-secondary me-2"
+                                                    (click)="PreviousTab()">Previous</button>
+                                                <button type="submit" class="btn btn-success me-2"
+                                                    (click)="onSubmit()">Submit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <app-footer></app-footer>
+</div>

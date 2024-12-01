@@ -1,0 +1,155 @@
+<div class="wrapper">
+  <app-header></app-header>
+  <main class="container " id="paymentDiv">
+    <div class="row justify-content-center align-items-center">
+      <!-- Carousel Section -->
+      <div class="col-md-4">
+        <div class="image-container">
+          <img src="./assets/images/paymentpage.jpg" alt="Passport Image" class="img-fluid">
+        </div>
+      </div>
+      <!-- Payment Details Section -->
+      <div class="col-md-8 mb-4" id="statustracker">
+        <div *ngIf="!applicationFound">
+          <h4 class="text-center mb-4">Track Application Status</h4>
+          <form [formGroup]="myForm" (ngSubmit)="CheckApplication()">
+            <div class="row mb-3">
+              <div class="col-8 offset-2">
+                <label for="applicationType" class="form-label">Application Type:</label>
+              <select id="applicationType" formControlName="applicationType" class="form-control">
+                <option value="" disabled selected>Select Type</option>
+                <option *ngFor="let type of applicationTypes" [value]="type.value">{{ type.key }}</option>
+              </select>
+              <div class="error-message"
+                   *ngIf="myForm.get('applicationType')?.touched && myForm.get('applicationType')?.hasError('required')">
+                Please select an application type.
+              </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-8 offset-2">
+                <label for="applicationNo" class="form-label">Application/File Number:</label>
+                <input type="text" id="applicationNo" formControlName="applicationNo" class="form-control">
+                <div class="error-message"
+                     *ngIf="myForm.get('applicationNo')?.touched && myForm.get('applicationNo')?.hasError('required')">
+                  Please provide an application/file number.
+                </div>
+                <div class="error-message"
+                     *ngIf="myForm.get('applicationNo')?.touched && myForm.get('applicationNo')?.hasError('pattern')">
+                  Application number must be exactly 10 digits long.
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-8 offset-2">
+                <label for="dob" class="form-label">Date of Birth:</label>
+              <input type="date" id="dob" formControlName="dob" class="form-control">
+              <div class="error-message" *ngIf="myForm.get('dob')?.touched && myForm.get('dob')?.hasError('required')">
+                Please provide your date of birth.
+              </div>
+              <div class="error-message" *ngIf="myForm.get('dob')?.touched && myForm.get('dob')?.hasError('pastDate')">
+                Date of birth must be a past date.
+              </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-8 offset-2 text-center">
+                <button type="submit" class="btn btn-primary w-50 mt-4">Check Status</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!-- Payment Form Section -->
+        <div class="col-md-12" *ngIf="applicationFound">
+          <h4 class="text-center mb-4">Payment Information</h4>
+          <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="payment_method" class="form-label">Payment Method:</label>
+                <select id="payment_method" formControlName="payment_method" class="form-control">
+                  <option value="" disabled selected>Select Payment Method</option>
+                  <option value="credit_card">Credit Card</option>
+                  <option value="debit_card">Debit Card</option>
+                </select>
+                <div class="error-message"
+                  *ngIf="paymentForm.get('payment_method')?.touched && paymentForm.get('payment_method')?.hasError('required')">
+                  Please select a payment method.
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="card_number" class="form-label">Card Number:</label>
+                <input type="text" id="card_number" formControlName="card_number" class="form-control"
+                  placeholder="xxxx xxxx xxxx xxxx">
+                <div class="error-message"
+                  *ngIf="paymentForm.get('card_number')?.touched && paymentForm.get('card_number')?.hasError('required')">
+                  Please provide a card number.
+                </div>
+                <div class="error-message"
+                  *ngIf="paymentForm.get('card_number')?.touched && paymentForm.get('card_number')?.hasError('pattern')">
+                  Card number must be in the format xxxx xxxx xxxx xxxx.
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="expiry_date" class="form-label">Expiry Date:</label>
+                <input type="text" id="expiry_date" formControlName="expiry_date" class="form-control"
+                  placeholder="MM/YYYY">
+                <div class="error-message"
+                  *ngIf="paymentForm.get('expiry_date')?.touched && paymentForm.get('expiry_date')?.hasError('required')">
+                  Please provide an expiry date.
+                </div>
+                <div class="error-message"
+                  *ngIf="paymentForm.get('expiry_date')?.touched && paymentForm.get('expiry_date')?.hasError('pattern')">
+                  Expiry date must be in the format MM/YYYY.
+                </div>
+                <div class="error-message"
+                  *ngIf="paymentForm.get('expiry_date')?.touched && paymentForm.get('expiry_date')?.hasError('futureDate')">
+                  Expiry date must be in the future.
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="cvv" class="form-label">CVV:</label>
+                <input type="text" id="cvv" formControlName="cvv" class="form-control" placeholder="xxx">
+                <div class="error-message"
+                  *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.hasError('required')">
+                  Please provide a CVV.
+                </div>
+                <div class="error-message"
+                  *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.hasError('pattern')">
+                  CVV must be exactly 3 digits.
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="cardholder_name" class="form-label">Cardholder Name:</label>
+                <input type="text" id="cardholder_name" formControlName="cardholder_name" class="form-control">
+                <div class="error-message"
+                  *ngIf="paymentForm.get('cardholder_name')?.touched && paymentForm.get('cardholder_name')?.hasError('required')">
+                  Please provide the cardholder's name.
+                </div>
+                <div class="error-message"
+                  *ngIf="paymentForm.get('cardholder_name')?.touched && paymentForm.get('cardholder_name')?.hasError('pattern')">
+                  Cardholder name must contain only letters and spaces.
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="amount" class="form-label">Amount:</label>
+                <input type="text" id="amount" formControlName="amount" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary w-50">Pay Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
+</div>

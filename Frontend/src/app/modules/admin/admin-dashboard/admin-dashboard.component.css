@@ -1,0 +1,17 @@
+  #logout:hover {
+    cursor: pointer;
+  }
+
+.wrapper {
+  min-height: 100vh; /* Ensures the wrapper takes at least the full height of the viewport */
+  display: flex;
+  flex-direction: column; /* Stacks content vertically */
+}
+.fixed-image {
+  height: 200px; /* Adjust as needed */
+  width: 100%; /* Ensure it fits the card width */
+  object-fit: cover; /* Maintain aspect ratio, cover the image area */
+}
+.card{
+  width: 18rem;
+}

@@ -1,0 +1,159 @@
+<nav class="navbar navbar-expand-lg navbar-dark navbar-header mt-3" *ngIf="!isIndex && !isUser && !isAdmin">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" *ngIf="!isIndex">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item" *ngIf="!isHome">
+                    <a class="nav-link" routerLink="/">Home</a>
+                </li>
+                <li class="nav-item" *ngIf="!isLogin">
+                    <a class="nav-link" routerLink="/login">Login</a>
+                </li>
+                <li class="nav-item" *ngIf="!isSignup">
+                    <a class="nav-link" routerLink="/signup">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-header mt-3" *ngIf="isUser ">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link " routerLink="/user/dashboard" routerLinkActive="active">
+              <i class="bi bi-speedometer2"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user/newapplication" routerLinkActive="active">
+              <i class="fa fa-passport"></i> Apply for New Passport
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user/renewapplication" routerLinkActive="active">
+              <i class="fa fa-passport"></i> Apply for Renewal Passport
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user/payment" routerLinkActive="active">
+              <i class="fa fa-credit-card"></i> Make Payment
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " routerLink="/user/appstatus" routerLinkActive="active">
+              <i class="bi bi-table"></i> Application Status
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user/feedback" routerLinkActive="active">
+              <i class="bi bi-grid"></i> Customer Feedback
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user/aboutus" routerLinkActive="active">
+              <i class="bi bi-info-circle"></i> About Us
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/user/contactus" routerLinkActive="active">
+              <i class="bi bi-telephone"></i> Contact Us
+            </a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user "></i><span> {{this.dashName}}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              <li class="nav-item">
+                <a class="nav-link" (click)="onLogOut()" id="logout">
+                  <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-header mt-3" *ngIf="isAdmin">
+    <div class="container-fluid">
+        <div class="row w-100">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/userslist" routerLinkActive="active">
+                                <i class="bi bi-speedometer2"></i> Users
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/newapplicationlist" routerLinkActive="active">
+                                <i class="fa fa-passport"></i> New Passport List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/renewapplicationlist" routerLinkActive="active">
+                                <i class="fa fa-passport"></i> Renewal Passport List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/customerfeedback" routerLinkActive="active">
+                                <i class="bi bi-grid"></i> Customer Feedback
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/customercomplaint" routerLinkActive="active">
+                                <i class="bi bi-grid"></i> Customer Complaint
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown me-2">
+                            <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fas fa-user"></i> <span>{{this.dashName}}</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="onLogOut()" id="logout">
+                                        <i class="bi bi-box-arrow-right"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

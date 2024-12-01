@@ -1,0 +1,36 @@
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 0.25rem;
+  }
+  
+  .form-control.ng-invalid.ng-touched {
+    border-color: red;
+  }
+  
+  .form-control.ng-valid.ng-touched {
+    border-color: green;
+  }
+  #statusDiv{
+    margin-top: 85px;
+    /* margin-bottom: 80px; */
+  }
+  #logout:hover {
+    cursor: pointer;
+  }
+  @media (min-width: 1400px) {
+    .footer {
+      margin-top: 133px;
+    }
+}
+@media (max-width: 540px) {
+  #statustracker {
+    margin-top: 20px;
+  }
+}
+
+.wrapper {
+  min-height: 100vh; /* Ensures the wrapper takes at least the full height of the viewport */
+  display: flex;
+  flex-direction: column; /* Stacks content vertically */
+}

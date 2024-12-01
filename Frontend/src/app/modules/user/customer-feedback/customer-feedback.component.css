@@ -1,0 +1,24 @@
+.ng-invalid.ng-touched {
+    border-color: red;
+  }
+  
+  .invalid-feedback {
+    display: block;
+  }
+  #logout:hover {
+    cursor: pointer;
+  }
+  @media (max-width: 540px) {
+    #feebackDiv {
+      margin-top: 20px;
+    }
+  }
+
+  .wrapper {
+    min-height: 100vh; /* Ensures the wrapper takes at least the full height of the viewport */
+    display: flex;
+    flex-direction: column; /* Stacks content vertically */
+  }
+  .content {
+    flex: 1 0 auto; /* Takes up remaining space in the viewport */
+  }

@@ -1,0 +1,67 @@
+<div class="wrapper">
+    <app-header></app-header>
+    <main class="container " id="mainFeedback">
+        <div class="row justify-content-center align-items-center">
+            <!-- Carousel Section -->
+            <div class="col-md-4">
+                <div class="image-container">
+                    <img src="./assets/images/feedback1.jpeg" alt="Passport Image" class="img-fluid">
+                </div>
+            </div>
+            <!-- Form Section -->
+            <div class="col-md-8" id="feebackDiv">
+                <div class="content center-content rounded bg-burlywood p-4">
+                    <h2 class="text-center mb-2">Submit your Complaint or Feedback</h2>
+                    <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" class="needs-validation" novalidate>
+                        <div class="form-group">
+                            <label for="username">Name:</label>
+                            <input type="text" class="form-control" id="username" formControlName="username" readonly>
+                            <div class="invalid-feedback"
+                                *ngIf="feedbackForm.get('username')?.hasError('required') && feedbackForm.get('username')?.touched">
+                                Please enter your name.
+                            </div>
+                            <div class="invalid-feedback"
+                                *ngIf="feedbackForm.get('username')?.hasError('lettersOnly') && feedbackForm.get('username')?.touched">
+                                The name should contain letters only.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" formControlName="email" readonly>
+                            <div class="invalid-feedback"
+                                *ngIf="feedbackForm.get('email')?.invalid && feedbackForm.get('email')?.touched">
+                                Please enter a valid email address.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedbackType">Subject:</label>
+                            <select id="feedbackType" class="form-control" formControlName="feedbackType">
+                              <option value="" selected>Select Subject Type</option>
+                              <!-- Use keyvalue pipe to iterate over enum and display key -->
+                              <option *ngFor="let type of feedbackTypes" [value]="type.key">{{ type.key }}</option>
+                            </select>
+                            <div class="invalid-feedback"
+                                 *ngIf="feedbackForm.get('feedbackType')?.invalid && feedbackForm.get('feedbackType')?.touched">
+                              Please select a subject type.
+                            </div>
+                          </div>
+                          
+                        <div class="form-group">
+                            <label for="description">Message:</label>
+                            <textarea id="description" class="form-control" formControlName="description"></textarea>
+                            <div class="invalid-feedback"
+                                *ngIf="feedbackForm.get('description')?.invalid && feedbackForm.get('description')?.touched">
+                                Please enter your message.
+                            </div>
+                        </div>
+                        <div class="form-buttons text-center mt-5">
+                            <button type="submit" class="btn btn-success me-2"
+                                [disabled]="feedbackForm.invalid">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <app-footer></app-footer>
+</div>

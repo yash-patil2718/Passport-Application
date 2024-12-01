@@ -1,0 +1,143 @@
+<app-header></app-header>
+
+<main class="container my-4">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="text-center">Welcome to Passport Seva</h2>
+      <div class="image-container">
+        <img src="../../../../assets/images/Sign up.gif" alt="Passport Image" class="img-fluid">
+      </div>
+      <p class="text-center mt-3"><strong>Embark on Global Journeys with Us!</strong></p>
+    </div>
+    <div class="col-md-6 mt-5">
+      <div class="signup-form-container w-100 border border-2 border-dark p-4">
+        <h2 class="text-center">Sign Up</h2>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="firstname">First Name:</label>
+              <input type="text" class="form-control" id="firstname" formControlName="firstname">
+              <div *ngIf="f['firstname'].touched && f['firstname'].invalid">
+                <span *ngIf="f['firstname'].errors?.['required']" class="text-danger">Please Enter the First Name</span>
+                <span *ngIf="f['firstname'].errors?.['pattern']" class="text-danger">First Name should contain only
+                  letters</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="middlename">Middle Name:</label>
+              <input type="text" class="form-control" id="middlename" formControlName="middlename">
+              <div *ngIf="f['middlename'].touched && f['middlename'].invalid">
+                <span *ngIf="f['middlename'].errors?.['required']" class="text-danger">Please Enter the Middle
+                  Name</span>
+                <span *ngIf="f['middlename'].errors?.['pattern']" class="text-danger">Middle Name should contain only
+                  letters</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="lastname">Last Name:</label>
+              <input type="text" class="form-control" id="lastname" formControlName="lastname">
+              <div *ngIf="f['lastname'].touched && f['lastname'].invalid">
+                <span *ngIf="f['lastname'].errors?.['required']" class="text-danger">Please Enter the Last Name</span>
+                <span *ngIf="f['lastname'].errors?.['pattern']" class="text-danger">Last Name should contain only
+                  letters</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="dob">Date of Birth:</label>
+              <input type="date" class="form-control" id="dob" formControlName="dob">
+              <div *ngIf="f['dob'].touched && f['dob'].invalid">
+                <span *ngIf="f['dob'].errors?.['required']" class="text-danger">Please enter your date of birth</span>
+                <span *ngIf="f['dob'].errors?.['pastDate']" class="text-danger">Date of Birth must be in the past</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="email">Email ID:</label>
+              <input type="email" class="form-control" id="email" formControlName="email">
+              <div *ngIf="f['email'].touched && f['email'].invalid">
+                <span *ngIf="f['email'].errors?.['required']" class="text-danger">Please Enter the Email ID</span>
+                <span *ngIf="f['email'].errors?.['email']" class="text-danger">Invalid Email ID</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="mobileno">Mobile Number:</label>
+              <input type="text" class="form-control" id="mobileno" formControlName="mobileno">
+              <div *ngIf="f['mobileno'].touched && f['mobileno'].invalid">
+                <span *ngIf="f['mobileno'].errors?.['required']" class="text-danger">Please Enter the Mobile
+                  Number</span>
+                <span *ngIf="f['mobileno'].errors?.['pattern']" class="text-danger">Mobile Number should be 10
+                  digits</span>
+              </div>
+            </div>
+
+
+          </div>
+          <div class="row">
+
+            <div class="col-md-6 mb-3">
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" id="username" formControlName="username">
+              <div *ngIf="f['username'].touched && f['username'].invalid">
+                <span *ngIf="f['username'].errors?.['required']" class="text-danger">Please Enter the Username</span>
+                <span *ngIf="f['username'].errors?.['pattern']" class="text-danger">Username should not contain special
+                  characters</span>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" id="password" formControlName="password">
+              <div *ngIf="f['password'].touched && f['password'].invalid">
+                <span *ngIf="f['password'].errors?.['required']" class="text-danger">Please Enter the Password</span>
+                <span *ngIf="f['password'].errors?.['passwordStrength']" class="text-danger">
+                  Password must contain at least one uppercase letter, one lowercase letter, one number, and one special
+                  character
+                </span>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+
+            <div class="col-md-6 mb-3">
+              <label for="confirmpassword">Confirm Password:</label>
+              <input type="password" class="form-control" id="confirmpassword" formControlName="confirmpassword">
+              <div *ngIf="f['confirmpassword'].touched && f['confirmpassword'].invalid">
+                <span *ngIf="f['confirmpassword'].errors?.['required']" class="text-danger">Please Confirm the
+                  Password</span>
+              </div>
+              <div
+                *ngIf="signupForm.errors?.['mismatch'] && (f['confirmpassword'].dirty || f['confirmpassword'].touched)">
+                <span class="text-danger">Passwords do not match</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 mb-3">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="isAgreed" formControlName="isAgreed">
+                <label class="form-check-label" for="isAgreed">I agree to the terms and conditions</label>
+              </div>
+              <div *ngIf="f['isAgreed'].touched && f['isAgreed'].invalid">
+                <span *ngIf="f['isAgreed'].errors?.['required']" class="text-danger">You must agree to the terms and
+                  conditions</span>
+              </div>
+            </div>
+          </div>
+          <div class="form-buttons text-center">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="signupForm.invalid">Register</button>
+            <button type="reset" class="btn btn-secondary">Clear</button>
+          </div>
+          <div class="text-center mt-3">
+            <p class="py-2">Already have an account? Click the button below to log in:</p>
+            <button type="button" class="btn btn-success" routerLink="/login">Login</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</main>
+<app-footer></app-footer>
